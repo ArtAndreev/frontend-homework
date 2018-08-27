@@ -28,4 +28,56 @@ QUnit.module('Тестируем функцию euclid', function () {
 		const temp = [ 80325, 55275, 8746650, 3000000, 45672375, 225, 54675 ];
 		assert.strictEqual(euclid(...[ ...temp, ...temp, ...temp, ...temp, ...temp ]), euclid(...temp));
 	});
+
+	QUnit.test('Поведение при подаче некорректных аргументов', function (assert) {
+		assert.throws(euclid(), undefined, 'No args');
+		assert.throws(function() {
+				euclid('abacaba');
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'String arg (one)'
+		);
+		assert.throws(
+			function() {
+				euclid('abacaba', 'testtest');
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'String args (many)'
+		);
+		assert.throws(
+			function() {
+				euclid({}, {});
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'Object args'
+		);
+		assert.throws(
+			function() {
+				euclid(null);
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'Null arg'
+		);
+		assert.throws(
+			function() {
+				euclid(undefined);
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'Undefined arg'
+		);
+		assert.throws(
+			function() {
+				euclid(true, false);
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'Boolean args'
+		);
+		assert.throws(
+			function() {
+				euclid(function() {}, function() {});
+			},
+			new TypeError('Wrong type is given, expected number'),
+			'Function args'
+		);
+	});
 });
